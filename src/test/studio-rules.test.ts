@@ -1,5 +1,5 @@
 import { describe,it,expect } from 'vitest'
-import { packages,payment } from '@/data/studio'
+import { packages,payment,projects } from '@/data/studio'
 describe('Juma commercial rules',()=>{
  it('uses the supplied website starting prices',()=>expect(packages.Websites.map(p=>p.price)).toEqual([1500,2500,4000]))
  it('uses the supplied logo starting prices',()=>expect(packages['Logo Design'].map(p=>p.price)).toEqual([300,500,1000]))
@@ -10,4 +10,5 @@ describe('Juma commercial rules',()=>{
  it('limits business pages to 4–7',()=>expect(packages.Websites[1]?.features).toContain('4–7 pages'))
  it('includes five flyers in the bundle',()=>expect(packages['Flyer Design'][2]?.features).toContain('5 custom flyers'))
  it('includes one concept and two revisions for a basic logo',()=>{expect(packages['Logo Design'][0]?.features).toContain('1 initial concept');expect(packages['Logo Design'][0]?.features).toContain('2 revisions')})
+ it('keeps the project gallery aligned to websites, UI/UX and design work',()=>{expect(projects.some(p=>p.category==='Websites')).toBe(true);expect(projects.some(p=>p.category==='UI/UX')).toBe(true);expect(projects.some(p=>p.category==='Designs')).toBe(true)})
 })

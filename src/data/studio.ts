@@ -8,6 +8,7 @@ import bankHome from '@/assets/uiux11.png'
 import pizza from '@/assets/designs.jpeg'
 import wrap from '@/assets/designs2.jpeg'
 import bird from '@/assets/uiux10.png'
+const assetImages = import.meta.glob<string>('../assets/*.{png,jpg,jpeg,webp}', { eager: true, query: '?url', import: 'default' })
 export const navigation = [['Home','/'],['Services','/services'],['Work','/work'],['Pricing','/pricing'],['Process','/process'],['Contact','/contact']] as const
 export type Category = 'Websites' | 'Logo Design' | 'Flyer Design'
 export const packages: Record<Category, {name:string; price:number; plus?:boolean; audience?:string; features:string[]}[]> = {
@@ -29,8 +30,8 @@ export const packages: Record<Category, {name:string; price:number; plus?:boolea
 }
 export const payment = {deposit:70,balance:30,balanceDue:'upon completion before final handover/live deployment'}
 export const formatPrice=(price:number)=>`GH₵${price.toLocaleString('en-GH')}`
-export type Project = {id:string;name:string;category:'Websites'|'Branding'|'Flyers'|'UI/UX';description:string;image:string;images?:string[];services:string[];link?:string}
-export const projects: Project[] = [
+export type Project = {id:string;name:string;category:'Websites'|'Branding'|'Flyers'|'Designs'|'UI/UX';description:string;image:string;images?:string[];services:string[];link?:string}
+const featuredProjects: Project[] = [
  {id:'saf',name:'SAF Interior',category:'Websites',description:'An interior design website preview with immersive room photography and a clean, considered layout.',image:interior,images:[interior,interiors],services:['Web design','Responsive development','Portfolio layout']},
  {id:'pro',name:'Pro Fitness',category:'Websites',description:'A bold fitness website preview built around strong typography and energetic imagery.',image:gym,images:[gym,gymGallery],services:['Web design','Responsive development']},
  {id:'bartey',name:'Bartey Decor',category:'Websites',description:'A refined product-focused website preview for interiors and decorative pieces.',image:decor,services:['Web design','Product presentation']},
@@ -39,6 +40,23 @@ export const projects: Project[] = [
  {id:'bank',name:'Golden Ore — Banking UI',category:'UI/UX',description:'Mobile banking interface previews exploring onboarding and everyday account management.',image:bankHome,images:[bankHome,bank],services:['UI design','Mobile interface']},
  {id:'mark',name:'Geometric Bird',category:'Branding',description:'An uploaded geometric mark study. Brand name and project details are pending.',image:bird,services:['Logo design','Visual identity']}
 ]
+const featuredAssetNames = new Set(['website40.png','website37.png','website30.png','website29.png','website2.png','uiux14.png','uiux11.png','designs.jpeg','designs2.jpeg','uiux10.png'])
+const additionalProjects: Project[] = Object.entries(assetImages)
+ .sort(([a],[b])=>a.localeCompare(b,undefined,{numeric:true}))
+ .filter(([path])=>{
+  const filename=path.split('/').pop()?.toLowerCase()??''
+  return filename!=='jumalogo.png'&&!featuredAssetNames.has(filename)
+ })
+ .map(([path,image],index)=>{
+  const filename=path.split('/').pop()??path
+  const stem=filename.replace(/\.[^.]+$/,'')
+  const number=stem.match(/\d+/)?.[0]??String(index+1)
+    const category:Project['category']=/^websit[ew]/i.test(stem)?'Websites':/^uiu*x/i.test(stem)?'UI/UX':/^designs/i.test(stem)?'Flyers':'Designs'
+  const serviceDetails:Record<Project['category'],string[]>={Websites:['Web design','Responsive development'],Branding:['Logo design','Visual identity'],Flyers:['Flyer design','Social media graphics'],Designs:['Graphic design','Visual design'],'UI/UX':['UI/UX design','Interface design']}
+  const title=category==='Websites'?`Website Project ${number}`:category==='UI/UX'?`UI/UX Design ${number}`:category==='Flyers'?`Flyer Design ${number}`:`Graphic Design ${number}`
+    return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,image,services:serviceDetails[category]}
+ })
+export const projects: Project[] = [...featuredProjects,...additionalProjects]
 export const stages=[
  {title:'Contact Us',lead:'Tell us what you need.',text:'Contact us through WhatsApp, phone, email or the website. We discuss your business, what you want, your goals, budget, timeline and required deliverables.'},
  {title:'We Build a Demo',lead:'An idea becomes something you can see.',text:'For suitable projects, we create an initial demo or concept using your specifications, business information, publicly available information and preferred style. Review a tangible direction before committing to the full project.'},

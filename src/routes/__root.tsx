@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import logo from "../assets/jumalogo.png";
 import { Navbar, Footer } from "@/components/studio/layout";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -85,7 +86,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Juma Designs — Creative & Digital Studio" },
       { property: "og:description", content: "Creative design and modern websites from Accra, Ghana." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: logo },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: logo },
 
     ],
     links: [
@@ -96,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: logo, type: "image/png" },
     ],
   }),
   shellComponent: RootShell,

@@ -1,13 +1,13 @@
-import interior from '@/assets/curtain1.png.asset.json'
-import interiors from '@/assets/cutains5.png.asset.json'
-import gym from '@/assets/gym2.png.asset.json'
-import gymGallery from '@/assets/gym3.png.asset.json'
-import decor from '@/assets/bartey2.png.asset.json'
-import bank from '@/assets/bank1.png.asset.json'
-import bankHome from '@/assets/bank3.png.asset.json'
-import pizza from '@/assets/WhatsApp_Image_2026-10-07_at_11.05.14_PM_1.jpeg.asset.json'
-import wrap from '@/assets/WhatsApp_Image_2026-10-07_at_11.05.15_PM.jpeg.asset.json'
-import bird from '@/assets/h.png.asset.json'
+import interior from '@/assets/website40.png'
+import interiors from '@/assets/website37.png'
+import gym from '@/assets/website30.png'
+import gymGallery from '@/assets/website29.png'
+import decor from '@/assets/website2.png'
+import bank from '@/assets/uiux14.png'
+import bankHome from '@/assets/uiux11.png'
+import pizza from '@/assets/designs.jpeg'
+import wrap from '@/assets/designs2.jpeg'
+import bird from '@/assets/uiux10.png'
 export const navigation = [['Home','/'],['Services','/services'],['Work','/work'],['Pricing','/pricing'],['Process','/process'],['Contact','/contact']] as const
 export type Category = 'Websites' | 'Logo Design' | 'Flyer Design'
 export const packages: Record<Category, {name:string; price:number; plus?:boolean; audience?:string; features:string[]}[]> = {
@@ -31,13 +31,13 @@ export const payment = {deposit:70,balance:30,balanceDue:'upon completion before
 export const formatPrice=(price:number)=>`GH₵${price.toLocaleString('en-GH')}`
 export type Project = {id:string;name:string;category:'Websites'|'Branding'|'Flyers'|'UI/UX';description:string;image:string;images?:string[];services:string[];link?:string}
 export const projects: Project[] = [
- {id:'saf',name:'SAF Interior',category:'Websites',description:'An interior design website preview with immersive room photography and a clean, considered layout.',image:interior.url,images:[interior.url,interiors.url],services:['Web design','Responsive development','Portfolio layout']},
- {id:'pro',name:'Pro Fitness',category:'Websites',description:'A bold fitness website preview built around strong typography and energetic imagery.',image:gym.url,images:[gym.url,gymGallery.url],services:['Web design','Responsive development']},
- {id:'bartey',name:'Bartey Decor',category:'Websites',description:'A refined product-focused website preview for interiors and decorative pieces.',image:decor.url,services:['Web design','Product presentation']},
- {id:'pizza',name:'Friday Special',category:'Flyers',description:'A promotional pizza design featuring vibrant food imagery and a clear offer.',image:pizza.url,services:['Flyer design','Social media graphics']},
- {id:'wrap',name:'Extra Spicy',category:'Flyers',description:'A punchy food promotion with expressive typography and a product-led composition.',image:wrap.url,services:['Creative direction','Flyer design']},
- {id:'bank',name:'Golden Ore — Banking UI',category:'UI/UX',description:'Mobile banking interface previews exploring onboarding and everyday account management.',image:bankHome.url,images:[bankHome.url,bank.url],services:['UI design','Mobile interface']},
- {id:'mark',name:'Geometric Bird',category:'Branding',description:'An uploaded geometric mark study. Brand name and project details are pending.',image:bird.url,services:['Logo design','Visual identity']}
+ {id:'saf',name:'SAF Interior',category:'Websites',description:'An interior design website preview with immersive room photography and a clean, considered layout.',image:interior,images:[interior,interiors],services:['Web design','Responsive development','Portfolio layout']},
+ {id:'pro',name:'Pro Fitness',category:'Websites',description:'A bold fitness website preview built around strong typography and energetic imagery.',image:gym,images:[gym,gymGallery],services:['Web design','Responsive development']},
+ {id:'bartey',name:'Bartey Decor',category:'Websites',description:'A refined product-focused website preview for interiors and decorative pieces.',image:decor,services:['Web design','Product presentation']},
+ {id:'pizza',name:'Friday Special',category:'Flyers',description:'A promotional pizza design featuring vibrant food imagery and a clear offer.',image:pizza,services:['Flyer design','Social media graphics']},
+ {id:'wrap',name:'Extra Spicy',category:'Flyers',description:'A punchy food promotion with expressive typography and a product-led composition.',image:wrap,services:['Creative direction','Flyer design']},
+ {id:'bank',name:'Golden Ore — Banking UI',category:'UI/UX',description:'Mobile banking interface previews exploring onboarding and everyday account management.',image:bankHome,images:[bankHome,bank],services:['UI design','Mobile interface']},
+ {id:'mark',name:'Geometric Bird',category:'Branding',description:'An uploaded geometric mark study. Brand name and project details are pending.',image:bird,services:['Logo design','Visual identity']}
 ]
 export const stages=[
  {title:'Contact Us',lead:'Tell us what you need.',text:'Contact us through WhatsApp, phone, email or the website. We discuss your business, what you want, your goals, budget, timeline and required deliverables.'},

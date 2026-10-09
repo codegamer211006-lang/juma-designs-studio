@@ -1,24 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
-export const Route = createFileRoute("/")({
-  component: Index,
-});
-
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
+import { createFileRoute } from '@tanstack/react-router'
+import { useEffect } from 'react'
+import { pageHead } from '@/lib/metadata'
+import { Hero, Services, WhyUs, Testimonials, FinalCTA } from '@/components/studio/sections'
+import { Portfolio } from '@/components/studio/portfolio'
+import { PricingTabs } from '@/components/studio/pricing'
+import { ProcessTimeline, FAQ } from '@/components/studio/process'
+export const Route=createFileRoute('/')({head:()=>pageHead('Creative & Digital Studio in Accra','Juma Designs helps businesses grow with professional branding, graphic design and modern websites. Explore our work, starting prices and straightforward project process.'),component:Home})
+function Home(){useEffect(()=>{const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('main > div > .section').forEach(el=>{el.classList.add('reveal');observer.observe(el)});return()=>{observer.disconnect();document.querySelectorAll('.reveal').forEach(el=>el.classList.remove('reveal'))}},[]);return <div><Hero/><Portfolio compact/><Services/><PricingTabs/><WhyUs/><ProcessTimeline/><Testimonials/><FAQ/><FinalCTA/></div>}

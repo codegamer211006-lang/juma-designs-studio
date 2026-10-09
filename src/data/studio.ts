@@ -34,16 +34,23 @@ export const packages: Record<Category, {name:string; price:number; plus?:boolea
 }
 export const payment = {deposit:70,balance:30,balanceDue:'upon completion before final handover/live deployment'}
 export const formatPrice=(price:number)=>`GH₵${price.toLocaleString('en-GH')}`
-export type Project = {id:string;name:string;category:'Websites'|'Branding'|'Flyers'|'Designs'|'UI/UX';description:string;image:string;images?:string[];services:string[];link?:string}
+export type Project = {id:string;name:string;category:'Websites'|'Branding'|'Flyers'|'Designs'|'UI/UX';description:string;caption:string;image:string;images?:string[];services:string[];link?:string}
 const featuredProjects: Project[] = [
- {id:'saf',name:'SAF Interior',category:'Websites',description:'An interior design website preview with immersive room photography and a clean, considered layout.',image:interior,images:[interior,interiors],services:['Web design','Responsive development','Portfolio layout']},
- {id:'pro',name:'Pro Fitness',category:'Websites',description:'A bold fitness website preview built around strong typography and energetic imagery.',image:gym,images:[gym,gymGallery],services:['Web design','Responsive development']},
- {id:'bartey',name:'Bartey Decor',category:'Websites',description:'A refined product-focused website preview for interiors and decorative pieces.',image:decor,services:['Web design','Product presentation']},
- {id:'pizza',name:'Friday Special',category:'Flyers',description:'A promotional pizza design featuring vibrant food imagery and a clear offer.',image:pizza,services:['Flyer design','Social media graphics']},
- {id:'wrap',name:'Extra Spicy',category:'Flyers',description:'A punchy food promotion with expressive typography and a product-led composition.',image:wrap,services:['Creative direction','Flyer design']},
- {id:'bank',name:'Golden Ore — Banking UI',category:'UI/UX',description:'Mobile banking interface previews exploring onboarding and everyday account management.',image:bankHome,images:[bankHome,bank],services:['UI design','Mobile interface']},
- {id:'mark',name:'Geometric Bird',category:'Branding',description:'An uploaded geometric mark study. Brand name and project details are pending.',image:bird,services:['Logo design','Visual identity']}
+ {id:'saf',name:'SAF Interior',category:'Websites',description:'An interior design website preview with immersive room photography and a clean, considered layout.',caption:'A calm, image-led showcase of considered interior spaces.',image:interior,images:[interior,interiors],services:['Web design','Responsive development','Portfolio layout']},
+ {id:'pro',name:'Pro Fitness',category:'Websites',description:'A bold fitness website preview built around strong typography and energetic imagery.',caption:'Energetic fitness visuals paired with bold, direct messaging.',image:gym,images:[gym,gymGallery],services:['Web design','Responsive development']},
+ {id:'bartey',name:'Bartey Decor',category:'Websites',description:'A refined product-focused website preview for interiors and decorative pieces.',caption:'Custom furniture and styled interiors take center stage.',image:decor,services:['Web design','Product presentation']},
+ {id:'pizza',name:'Friday Special',category:'Flyers',description:'A promotional pizza design featuring vibrant food imagery and a clear offer.',caption:'A colorful pizza special with an easy-to-spot offer.',image:pizza,services:['Flyer design','Social media graphics']},
+ {id:'wrap',name:'Extra Spicy',category:'Flyers',description:'A punchy food promotion with expressive typography and a product-led composition.',caption:'A spicy food promo driven by bold type and product imagery.',image:wrap,services:['Creative direction','Flyer design']},
+ {id:'bank',name:'Golden Ore — Banking UI',category:'UI/UX',description:'Mobile banking interface previews exploring onboarding and everyday account management.',caption:'A gold-accented banking interface for everyday money tasks.',image:bankHome,images:[bankHome,bank],services:['UI design','Mobile interface']},
+ {id:'mark',name:'Geometric Bird',category:'Branding',description:'An uploaded geometric mark study. Brand name and project details are pending.',caption:'A geometric bird mark in a crisp, minimal style.',image:bird,services:['Logo design','Visual identity']}
 ]
+const assetCaptions:Record<string,string>={
+ 'website1.png':'A custom-furniture homepage set against a polished showroom interior.',
+ 'website15.png':'A car-rental landing page with a featured vehicle and booking prompt.',
+ 'website48.png':'A warm wood walk-in closet with fitted shelves and hanging space.',
+ 'designs3.jpeg':'An Air Jordan 4 promo pairing a sneaker close-up with product details.',
+ 'designs7.png':'A dark-and-gold Golden Ore banking identity graphic.'
+}
 const featuredAssetNames = new Set(['website40.png','website37.png','website30.png','website29.png','website2.png','uiux14.png','uiux11.png','designs.jpeg','designs2.jpeg','uiux10.png'])
 const additionalProjects: Project[] = Object.entries(assetImages)
  .sort(([a],[b])=>a.localeCompare(b,undefined,{numeric:true}))
@@ -58,7 +65,8 @@ const additionalProjects: Project[] = Object.entries(assetImages)
     const category:Project['category']=/^websit[ew]/i.test(stem)?'Websites':/^uiu*x/i.test(stem)?'UI/UX':/^designs/i.test(stem)?'Flyers':'Designs'
   const serviceDetails:Record<Project['category'],string[]>={Websites:['Web design','Responsive development'],Branding:['Logo design','Visual identity'],Flyers:['Flyer design','Social media graphics'],Designs:['Graphic design','Visual design'],'UI/UX':['UI/UX design','Interface design']}
   const title=category==='Websites'?`Website Project ${number}`:category==='UI/UX'?`UI/UX Design ${number}`:category==='Flyers'?`Flyer Design ${number}`:`Graphic Design ${number}`
-    return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,image:projectImage(filename),services:serviceDetails[category]}
+    const captions:Record<Project['category'],string>={Websites:'A full-page business site with a clear, image-led layout.',Branding:'A distinctive identity study shaped by its mark and palette.',Flyers:'A promotional graphic pairing bold type with product imagery.',Designs:'A focused visual study built around color, form and detail.','UI/UX':'A screen concept balancing key details and everyday actions.'}
+    return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,caption:assetCaptions[filename]??captions[category],image:projectImage(filename),services:serviceDetails[category]}
  })
 export const projects: Project[] = [...featuredProjects,...additionalProjects]
 export const stages=[

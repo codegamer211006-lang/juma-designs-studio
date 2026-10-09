@@ -51,6 +51,16 @@ const assetCaptions:Record<string,string>={
  'designs3.jpeg':'An Air Jordan 4 promo pairing a sneaker close-up with product details.',
  'designs7.png':'A dark-and-gold Golden Ore banking identity graphic.'
 }
+const assetTitles:Record<string,string>={
+ 'design13.png':'Bowling Night Event Poster','design14.png':'Tropical Fever Party Flyer','design15.png':'Urban Streetwear Campaign','design16.png':'JBL Audio Promotion','design17.png':'Golden Ore Brand Promotion','design18.png':'Event Night Promotion',
+ 'designs1.jpeg':'Restaurant Menu Promotion','designs2.jpeg':'Extra Spicy Food Promotion','designs3.jpeg':'Air Jordan 4 Sneaker Campaign','designs4.jpeg':'Restaurant Special Flyer','designs5.jpeg':'Food and Drinks Promotion','designs6.jpeg':'Product Launch Graphic','designs7.jpeg':'Golden Ore Brand Artwork','designs7.png':'Golden Ore Brand Artwork','designs8.png':'Business Promotion Graphic','designs9.png':'Social Media Campaign','designs10.png':'Restaurant Food Promotion','designs11.png':'Event Announcement','designs12.png':'Brand Identity Concept',
+ 'uiuuxdesign.png':'Restaurant Ordering Experience','uiux1 (1).png':'Perfect Touch | Featured Dishes','uiux1 (2).png':'Perfect Touch | Our Story','uiux1 (3).png':'Perfect Touch | Restaurant Homepage','uiux1 (4).png':"The Locher's | Social and Contact","uiux1 (5).png":"The Locher's | Online Menu","uiux1 (6).png":"The Locher's | Dining Experiences","uiux1 (7).png":"The Locher's | Restaurant Homepage","uiux1 (8).png":'ProFitness | Membership Plans','uiux1 (9).png':'ProFitness | Fitness Homepage','uiux1 (10).png':'Paulo Restaurant | Dining Experience','uiux1 (11).png':'Paulo Restaurant | Navigation Concept',
+ 'uiux8.png':'Restaurant Website Experience','uiux9.png':'Restaurant Website | Menu','uiux12.png':'Restaurant Website | Featured Menu','uiux13.png':'Restaurant Website | Homepage','uiux14.png':'Golden Ore | Mobile Banking Dashboard',
+ 'website1.png':'Vehicle Rental Booking Website','website4.png':'ShopAllGH | Online Storefront','website5.png':'ShopAllGH | Product Collection','website6.png':'ShopAllGH | Product Details','website7.png':'Wonda Fleet | Rental Homepage','website8.png':'Wonda Fleet | Vehicle Listings','website9.png':'Wonda Fleet | Vehicle Details','website10.png':'Wonda Fleet | Booking Experience','website11.png':'Wonda Fleet | About the Fleet','website12.png':'Wonda Fleet | Rental Services','website13.png':'Wonda Fleet | Contact Page','website14.png':'Wonda Fleet | Vehicle Collection','website15.png':'Car Rental | Fleet and Booking','website16.png':'Car Rental | Vehicle Collection','website17.png':'Car Rental | Featured Vehicle','website18.png':'Car Rental | Booking Details','website19.png':'Car Rental | Rental Services','websitw20.png':'Vehicle Hire | Booking Page',
+ 'website21.png':'Perfect Touch | Featured Menu','website22.png':'Perfect Touch | Restaurant Story','website23.png':'Perfect Touch | Dining Homepage','website24.png':'Perfect Touch | Food Menu','website25.png':'Perfect Touch | Menu Categories','website26.png':'Perfect Touch | Restaurant Gallery',
+ 'website27.png':"The Locher's | Restaurant Homepage",'website28.png':"The Locher's | Menu and Ordering",'website31.png':"The Locher's | Dining Experiences",'website32.png':"The Locher's | Restaurant and Grill",'website33.png':"The Locher's | Events and Lounge",'website34.png':"The Locher's | Food and Ambience",
+ 'website35.png':'Paulo Restaurant | Featured Dishes','website36.png':'Paulo Restaurant | Welcome Page','website38.png':'SAF Interior | Project Gallery','website39.png':'SAF Interior | Room Transformations','website41.png':'SAF Interior | Studio Story','website42.png':'Hearts & Ink | Bookshop Homepage','website43.png':'Hearts & Ink | Curated Book Collection','website44.png':'Hearts & Ink | Bookstore Homepage','website48.png':'Bartey Decor | Walk-In Wardrobes'
+}
 const featuredAssetNames = new Set(['website40.png','website37.png','website30.png','website29.png','website2.png','uiux14.png','uiux11.png','designs.jpeg','designs2.jpeg','uiux10.png'])
 const additionalProjects: Project[] = Object.entries(assetImages)
  .sort(([a],[b])=>a.localeCompare(b,undefined,{numeric:true}))
@@ -58,13 +68,12 @@ const additionalProjects: Project[] = Object.entries(assetImages)
   const filename=path.split('/').pop()?.toLowerCase()??''
   return /\.(png|jpe?g)$/i.test(filename)&&filename!=='jumalogo.png'&&!featuredAssetNames.has(filename)
  })
- .map(([path,image],index)=>{
+ .map(([path,image])=>{
   const filename=path.split('/').pop()??path
   const stem=filename.replace(/\.[^.]+$/,'')
-  const number=stem.match(/\d+/)?.[0]??String(index+1)
     const category:Project['category']=/^websit[ew]/i.test(stem)?'Websites':/^uiu*x/i.test(stem)?'UI/UX':/^designs/i.test(stem)?'Flyers':'Designs'
   const serviceDetails:Record<Project['category'],string[]>={Websites:['Web design','Responsive development'],Branding:['Logo design','Visual identity'],Flyers:['Flyer design','Social media graphics'],Designs:['Graphic design','Visual design'],'UI/UX':['UI/UX design','Interface design']}
-  const title=category==='Websites'?`Website Project ${number}`:category==='UI/UX'?`UI/UX Design ${number}`:category==='Flyers'?`Flyer Design ${number}`:`Graphic Design ${number}`
+  const title=assetTitles[filename]??(category==='Websites'?'Business Website':category==='UI/UX'?'Digital Interface Concept':category==='Flyers'?'Promotional Campaign':'Visual Identity Concept')
     const captions:Record<Project['category'],string>={Websites:'A full-page business site with a clear, image-led layout.',Branding:'A distinctive identity study shaped by its mark and palette.',Flyers:'A promotional graphic pairing bold type with product imagery.',Designs:'A focused visual study built around color, form and detail.','UI/UX':'A screen concept balancing key details and everyday actions.'}
     return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,caption:assetCaptions[filename]??captions[category],image:projectImage(filename),services:serviceDetails[category]}
  })

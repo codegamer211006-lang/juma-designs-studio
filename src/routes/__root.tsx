@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import logo from "../assets/jumalogo.png";
+import { contactDetails } from "@/data/studio";
 import { Navbar, Footer } from "@/components/studio/layout";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -83,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Juma Designs — Creative & Digital Studio" },
       { name: "description", content: "Creative design and modern websites from Accra, Ghana." },
       { name: "author", content: "Juma Designs" },
+      { name: "telephone", content: contactDetails.phone },
       { property: "og:title", content: "Juma Designs — Creative & Digital Studio" },
       { property: "og:description", content: "Creative design and modern websites from Accra, Ghana." },
       { property: "og:type", content: "website" },

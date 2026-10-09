@@ -1,14 +1,18 @@
-import interior from '@/assets/website40.png'
-import interiors from '@/assets/website37.png'
-import gym from '@/assets/website30.png'
-import gymGallery from '@/assets/website29.png'
-import decor from '@/assets/website2.png'
-import bank from '@/assets/uiux14.png'
-import bankHome from '@/assets/uiux11.png'
-import pizza from '@/assets/designs.jpeg'
-import wrap from '@/assets/designs2.jpeg'
-import bird from '@/assets/uiux10.png'
 const assetImages = import.meta.glob<string>('../assets/*.{png,jpg,jpeg,webp}', { eager: true, query: '?url', import: 'default' })
+const projectImage = (filename:string) => {
+ const optimized=`../assets/${filename.replace(/\.([^.]+)$/,(match,ext)=>`-${ext.toLowerCase()}.webp`)}`
+ return assetImages[optimized]??assetImages[`../assets/${filename}`]??''
+}
+const interior=projectImage('website40.png')
+const interiors=projectImage('website37.png')
+const gym=projectImage('website30.png')
+const gymGallery=projectImage('website29.png')
+const decor=projectImage('website2.png')
+const bank=projectImage('uiux14.png')
+const bankHome=projectImage('uiux11.png')
+const pizza=projectImage('designs.jpeg')
+const wrap=projectImage('designs2.jpeg')
+const bird=projectImage('uiux10.png')
 export const navigation = [['Home','/'],['Services','/services'],['Work','/work'],['Pricing','/pricing'],['Process','/process'],['Contact','/contact']] as const
 export type Category = 'Websites' | 'Logo Design' | 'Flyer Design'
 export const packages: Record<Category, {name:string; price:number; plus?:boolean; audience?:string; features:string[]}[]> = {
@@ -45,7 +49,7 @@ const additionalProjects: Project[] = Object.entries(assetImages)
  .sort(([a],[b])=>a.localeCompare(b,undefined,{numeric:true}))
  .filter(([path])=>{
   const filename=path.split('/').pop()?.toLowerCase()??''
-  return filename!=='jumalogo.png'&&!featuredAssetNames.has(filename)
+  return /\.(png|jpe?g)$/i.test(filename)&&filename!=='jumalogo.png'&&!featuredAssetNames.has(filename)
  })
  .map(([path,image],index)=>{
   const filename=path.split('/').pop()??path
@@ -54,7 +58,7 @@ const additionalProjects: Project[] = Object.entries(assetImages)
     const category:Project['category']=/^websit[ew]/i.test(stem)?'Websites':/^uiu*x/i.test(stem)?'UI/UX':/^designs/i.test(stem)?'Flyers':'Designs'
   const serviceDetails:Record<Project['category'],string[]>={Websites:['Web design','Responsive development'],Branding:['Logo design','Visual identity'],Flyers:['Flyer design','Social media graphics'],Designs:['Graphic design','Visual design'],'UI/UX':['UI/UX design','Interface design']}
   const title=category==='Websites'?`Website Project ${number}`:category==='UI/UX'?`UI/UX Design ${number}`:category==='Flyers'?`Flyer Design ${number}`:`Graphic Design ${number}`
-    return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,image,services:serviceDetails[category]}
+    return {id:`asset-${filename.toLowerCase().replace(/[^a-z0-9]+/g,'-')}`,name:title,category,description:`Uploaded ${category.toLowerCase()} preview. Project details and credits are pending.`,image:projectImage(filename),services:serviceDetails[category]}
  })
 export const projects: Project[] = [...featuredProjects,...additionalProjects]
 export const stages=[
@@ -74,4 +78,4 @@ export const faqs=[
  ['How long does a website take?','It depends on the size and complexity of the project. The timeline will be discussed before production begins.'],
  ['Can you design only a logo or flyer?','Yes. You can hire us for individual design services.']
 ]
-export const contactDetails={email:null as string|null, whatsapp:null as string|null, instagram:null as string|null,linkedin:null as string|null}
+export const contactDetails={phone:'0202736394',phoneDisplay:'020 273 6394',whatsapp:'233202736394',email:null as string|null,instagram:null as string|null,linkedin:null as string|null}
